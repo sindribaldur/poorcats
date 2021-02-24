@@ -1,22 +1,3 @@
-#' Collapse factor levels into manually defined groups
-#'
-#' @param .f A factor (or character vector).
-#' @param ... <[`dynamic-dots`][rlang::dyn-dots]> A series of named character vectors. The levels in
-#'   each vector will be replaced with the name.
-#' @inheritParams fct_other
-#' @param group_other Deprecated. Replace all levels not named in `...` with "Other"?
-#' @export
-#' @examples
-#' fct_count(gss_cat$partyid)
-#'
-#' partyid2 <- fct_collapse(gss_cat$partyid,
-#'   missing = c("No answer", "Don't know"),
-#'   other = "Other party",
-#'   rep = c("Strong republican", "Not str republican"),
-#'   ind = c("Ind,near rep", "Independent", "Ind,near dem"),
-#'   dem = c("Not str democrat", "Strong democrat")
-#' )
-#' fct_count(partyid2)
 fct_collapse <- function(.f, ..., other_level = NULL, group_other = "DEPRECATED") {
 
   if (!missing(group_other)) {

@@ -1,66 +1,3 @@
-#' Lump together factor levels into "other"
-#'
-#' @description
-#' A family for lumping together levels that meet some criteria.
-#' * `fct_lump_min()`: lumps levels that appear fewer than `min` times.
-#' * `fct_lump_prop()`: lumps levels that appear in fewer `prop * n` times.
-#' * `fct_lump_n()` lumps all levels except for the `n` most frequent
-#'    (or least frequent if `n < 0`)
-#' * `fct_lump_lowfreq()` lumps together the least frequent levels, ensuring
-#'    that "other" is still the smallest level.
-#'
-#' `fct_lump()` exists primarily for historical reasons, as it automatically
-#' picks between these different methods depending on its arguments.
-#' We no longer recommend that you use it.
-#'
-#' @param f A factor (or character vector).
-#' @param n Positive `n` preserves the most common `n` values.
-#'   Negative `n` preserves the least common `-n` values.
-#'   It there are ties, you will get at least `abs(n)` values.
-#' @param prop  Positive `prop` lumps values which do not appear at least
-#'   `prop` of the time. Negative `prop` lumps values that
-#'   do not appear at most `-prop` of the time.
-#' @param min Preserve levels that appear at least `min` number of times.
-#' @param w An optional numeric vector giving weights for frequency of
-#'   each value (not level) in f.
-#' @param other_level Value of level used for "other" values. Always
-#'   placed at end of levels.
-#' @param ties.method A character string specifying how ties are
-#'   treated. See [rank()] for details.
-#' @export
-#' @seealso [fct_other()] to convert specified levels to other.
-#' @examples
-#' x <- factor(rep(LETTERS[1:9], times = c(40, 10, 5, 27, 1, 1, 1, 1, 1)))
-#' x %>% table()
-#' x %>% fct_lump_n(3) %>% table()
-#' x %>% fct_lump_prop(0.10) %>% table()
-#' x %>% fct_lump_min(5) %>% table()
-#' x %>% fct_lump_lowfreq() %>% table()
-#'
-#' x <- factor(letters[rpois(100, 5)])
-#' x
-#' table(x)
-#' table(fct_lump_lowfreq(x))
-#'
-#' # Use positive values to collapse the rarest
-#' fct_lump_n(x, n = 3)
-#' fct_lump_prop(x, prop = 0.1)
-#'
-#' # Use negative values to collapse the most common
-#' fct_lump_n(x, n = -3)
-#' fct_lump_prop(x, prop = -0.1)
-#'
-#' # Use weighted frequencies
-#' w <- c(rep(2, 50), rep(1, 50))
-#' fct_lump_n(x, n = 5, w = w)
-#'
-#' # Use ties.method to control how tied factors are collapsed
-#' fct_lump_n(x, n = 6)
-#' fct_lump_n(x, n = 6, ties.method = "max")
-#'
-#' # Use fct_lump_min() to lump together all levels with fewer than `n` values
-#' table(fct_lump_min(x, min = 10))
-#' table(fct_lump_min(x, min = 15))
 fct_lump <- function(f, n, prop, w = NULL, other_level = "Other",
                      ties.method = c("min", "average", "first", "last", "random", "max")) {
 
@@ -79,8 +16,6 @@ fct_lump <- function(f, n, prop, w = NULL, other_level = "Other",
   }
 }
 
-#' @export
-#' @rdname fct_lump
 fct_lump_min <- function(f, min, w = NULL, other_level = "Other") {
 
   calcs <- check_calc_levels(f, w)
@@ -101,8 +36,6 @@ fct_lump_min <- function(f, min, w = NULL, other_level = "Other") {
 
 }
 
-#' @export
-#' @rdname fct_lump
 fct_lump_prop <- function(f, prop, w = NULL, other_level = "Other") {
 
   calcs <- check_calc_levels(f, w)
@@ -133,8 +66,6 @@ fct_lump_prop <- function(f, prop, w = NULL, other_level = "Other") {
 }
 
 
-#' @export
-#' @rdname fct_lump
 fct_lump_n <- function(f, n, w = NULL, other_level = "Other",
                        ties.method = c("min", "average", "first", "last", "random", "max")) {
 
@@ -169,8 +100,6 @@ fct_lump_n <- function(f, n, w = NULL, other_level = "Other",
 
 }
 
-#' @export
-#' @rdname fct_lump
 fct_lump_lowfreq <- function(f, other_level = "Other") {
 
   calcs <- check_calc_levels(f, NULL)

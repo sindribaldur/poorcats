@@ -1,31 +1,5 @@
-#' Low-level functions for manipulating levels
-#'
-#' `lvls_reorder` leaves values as they are, but changes the order.
-#' `lvls_revalue` changes the values of existing levels; there must
-#' be one new level for each old level.
-#' `lvls_expand` expands the set of levels; the new levels must
-#' include the old levels.
-#'
-#' These functions are less helpful than the higher-level `fct_` functions,
-#' but are safer than the very low-level manipulation of levels directly,
-#' because they are more specific, and hence can more carefully check their
-#' arguments.
-#'
-#' @param f A factor (or character vector).
-#' @param idx A integer index, with one integer for each existing level.
-#' @param new_levels A character vector of new levels.
-#' @param ordered A logical which determines the "ordered" status of the
-#'   output factor. `NA` preserves the existing status of the factor.
-#' @name lvls
-#' @examples
-#' f <- factor(c("a", "b", "c"))
-#' lvls_reorder(f, 3:1)
-#' lvls_revalue(f, c("apple", "banana", "carrot"))
-#' lvls_expand(f, c("a", "b", "c", "d"))
 NULL
 
-#' @export
-#' @rdname lvls
 lvls_reorder <- function(f, idx, ordered = NA) {
   f <- check_factor(f)
   if (!is.numeric(idx)) {
@@ -38,8 +12,6 @@ lvls_reorder <- function(f, idx, ordered = NA) {
   refactor(f, levels(f)[idx], ordered = ordered)
 }
 
-#' @export
-#' @rdname lvls
 lvls_revalue <- function(f, new_levels) {
   f <- check_factor(f)
 
@@ -70,8 +42,6 @@ lvls_revalue <- function(f, new_levels) {
   }
 }
 
-#' @export
-#' @rdname lvls
 lvls_expand <- function(f, new_levels) {
   f <- check_factor(f)
 
@@ -100,13 +70,6 @@ refactor <- function(f, new_levels, ordered = NA) {
 }
 
 
-#' Find all levels in a list of factors
-#'
-#' @param fs A list of factors.
-#' @export
-#' @examples
-#' fs <- list(factor("a"), factor("b"), factor(c("a", "b")))
-#' lvls_union(fs)
 lvls_union <- function(fs) {
   fs <- check_factor_list(fs)
   Reduce(function(x, y) union(x, levels(y)), fs, init = character())

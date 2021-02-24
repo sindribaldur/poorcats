@@ -1,28 +1,3 @@
-#' Change factor levels by hand
-#'
-#' @param .f A factor (or character vector).
-#' @param ... <[`dynamic-dots`][rlang::dyn-dots]> A sequence of named character
-#'   vectors where the name gives the new level, and the value gives the old
-#'   level. Levels not otherwise mentioned will be left as is. Levels can
-#'   be removed by naming them `NULL`.
-#' @export
-#' @examples
-#' x <- factor(c("apple", "bear", "banana", "dear"))
-#' fct_recode(x, fruit = "apple", fruit = "banana")
-#'
-#' # If you make a mistake you'll get a warning
-#' fct_recode(x, fruit = "apple", fruit = "bananana")
-#'
-#' # If you name the level NULL it will be removed
-#' fct_recode(x, NULL = "apple", fruit = "banana")
-#'
-#' # Wrap the left hand side in quotes if it contains special variables
-#' fct_recode(x, "an apple" = "apple", "a bear" = "bear")
-#'
-#' # When passing a named vector to rename levels use !!! to splice
-#' x <- factor(c("apple", "bear", "banana", "dear"))
-#' levels <- c(fruit = "apple", fruit = "banana")
-#' fct_recode(x, !!!levels)
 fct_recode <- function(.f, ...) {
   f <- check_factor(.f)
 
