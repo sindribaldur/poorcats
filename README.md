@@ -1,0 +1,2 @@
+# poorcats
+A minimalist and dependency-free implementation of [forcats](https://github.com/tidyverse/forcats) inspired by [poorman](https://github.com/nathaneastwood/poorman) a dependency-free implementation of [dplyr](https://github.com/tidyverse/dplyr).
